@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Quiz Maker</title>
+    <style>
+        /* Styles as before... */
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Online Quiz Maker</h1>
+        <p>Welcome! Choose an option below.</p>
+    </header>
+
+    <main>
+        <button onclick="showCreateQuizForm()">Create a Quiz</button>
+        <button onclick="showQuizList()">Take a Quiz</button>
+
+        <div id="createQuizForm" style="display: none;">
+            <h2>Create a Quiz</h2>
+            <form id="quizForm" onsubmit="createQuiz(event)">
+                <!-- Form fields for quiz creation go here -->
+                <label for="question">Question:</label>
+                <input type="text" id="question" name="question" required>
+                <br>
+                <label for="options">Options (comma-separated):</label>
+                <input type="text" id="options" name="options" required>
+                <br>
+                <label for="correctAnswer">Correct Answer:</label>
+                <input type="text" id="correctAnswer" name="correctAnswer" required>
+                <br>
+                <button type="button" onclick="addQuestion()">Add Question</button>
+                <br>
+                <button type="submit">Create Quiz</button>
+            </form>
+        </div>
+
+        <div id="quizList" style="display: none;">
+            <h2>Quiz List</h2>
+            <div class="quiz-list" id="quizListContainer">
+                <!-- Quiz cards dynamically populated here -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function showCreateQuizForm() {
+            document.getElementById('createQuizForm').style.display = 'block';
+            document.getElementById('quizList').style.display = 'none';
+        }
+
+        function showQuizList() {
+            document.getElementById('createQuizForm').style.display = 'none';
+            document.getElementById('quizList').style.display = 'block';
+            populateQuizList();
+        }
+
+        function addQuestion() {
+            // Logic to add a question to the quiz creation form
+        }
+
+        function createQuiz(event) {
+            event.preventDefault();
+            // Logic to handle quiz creation and update the quiz list
+            const question = document.getElementById('question').value;
+            const options = document.getElementById('options').value.split(',');
+            const correctAnswer = document.getElementById('correctAnswer').value;
+
+            // Assuming quizListData is a global array to store quiz data
+            quizListData.push({
+                question,
+                options,
+                correctAnswer
+            });
+
+            // Clear form fields
+            document.getElementById('question').value = '';
+            document.getElementById('options').value = '';
+            document.getElementById('correctAnswer').value = '';
+
+            // Update the quiz list
+            populateQuizList();
+        }
+
+        function populateQuizList() {
+            // Logic to fetch and display available quizzes
+            const quizListContainer = document.getElementById('quizListContainer');
+            quizListContainer.innerHTML = '';
+
+            // Loop through quizListData and create quiz cards dynamically
+            quizListData.forEach((quiz, index) => {
+                const quizCard = document.createElement('div');
+                quizCard.classList.add('quiz-card');
+                quizCard.innerHTML = `
+                    <h3>Quiz ${index + 1}</h3>
+                    <p>${quiz.question}</p>
+                    <button onclick="startQuiz(${index})">Start Quiz</button>
+                `;
+                quizListContainer.appendChild(quizCard);
+            });
+        }
+
+        function startQuiz(index) {
+            // Logic to start the quiz (redirect to quiz-taking page or display questions)
+            console.log('Starting Quiz:', quizListData[index]);
+        }
+    </script>
+
+</body>
+</html>
